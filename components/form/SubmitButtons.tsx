@@ -17,7 +17,7 @@ const SubmitButtons = ({ className, size, text }: SubmitButtonsProps) => {
       disabled={pending}
       size={size}
       type="submit"
-      className={`${className} capitalize cursor-pointer`}
+      className={`${className} capitalize cursor-pointer w-full`}
     >
       {pending ? (
         <>

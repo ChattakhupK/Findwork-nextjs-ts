@@ -14,7 +14,7 @@ const FormContainer = ({ children, action }: FormContainerProps) => {
   }, [state]);
 
   return (
-    <form action={formAction} className="max-w-md mx-auto">
+    <form action={formAction} className="max-w-lg mx-auto">
       {children}
     </form>
   );

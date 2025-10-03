@@ -1,5 +1,21 @@
 "use server";
-import { profileSchema, validateWithZod } from "@/utils/schemas";
+import {
+  imageSchema,
+  profileSchema,
+  validateWithZod,
+  workSchema,
+} from "@/utils/schemas";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import db from "@/utils/db";
+import { redirect } from "next/navigation";
+
+const getAuthUser = async () => {
+  const user = await currentUser();
+  if (!user) throw new Error("คุณต้องเข้าสู่ระบบก่อน!");
+
+  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
+  return user;
+};
 
 const renderError = (error: unknown): { message: string } => {
   return {
@@ -12,12 +28,60 @@ export const createProfileAction = async (
   formData: FormData
 ) => {
   try {
+    const user = await currentUser();
+    if (!user) throw new Error("กรุณาเข้าสู่ระบบก่อน!");
+
+    // validate form
     const rawData = Object.fromEntries(formData);
-    const validate = validateWithZod(profileSchema, rawData);
-    console.log("validate", validate);
-    return { message: "สร้างโปรไฟล์สำเร็จ!" };
+    const validateData = await validateWithZod(profileSchema, rawData);
+
+    // save profile
+    await db.profile.create({
+      data: {
+        clerkId: user.id,
+        email: user.emailAddresses[0].emailAddress,
+        profileImage: user.imageUrl ?? "",
+        ...validateData,
+      },
+    });
+
+    // update clerk metadata
+    const client = await clerkClient();
+    await client.users.updateUserMetadata(user.id, {
+      privateMetadata: {
+        hasProfile: true,
+      },
+    });
+
+    // return { success: true, message: "สร้างโปรไฟล์สำเร็จ!" };
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    return renderError(err);
+  }
+  redirect("/");
+};
+
+export const createWorkAction = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<{ message: string }> => {
+  try {
+    const user = await getAuthUser();
+    if (!user) throw new Error("เข้าสู่ระบบก่อน!");
+
+    const rawData = Object.fromEntries(formData);
+    const file = formData.get("image") as File;
+
+    const validatedFile = validateWithZod(imageSchema, { image: file });
+    const validatedData = validateWithZod(workSchema, rawData);
+    console.log(validatedData);
+
+    // 1 validate Data
+    // 2 upload Image to supabase
+    // 3 insert to DB
+
+    return { message: "สร้างงานสำเร็จ!" };
+  } catch (err) {
     return renderError(err);
   }
 };

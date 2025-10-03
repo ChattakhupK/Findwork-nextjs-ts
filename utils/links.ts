@@ -8,4 +8,5 @@ export const links: Links[] = [
   { href: "/profile", label: "โปรไฟล์" },
   { href: "/favorits", label: "จัดเก็บ" },
   { href: "/work", label: "งาน" },
+  { href: "/work/create", label: "สร้างงาน" },
 ];

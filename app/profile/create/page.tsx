@@ -2,8 +2,13 @@ import SubmitButtons from "@/components/form/SubmitButtons";
 import FormInput from "@/components/form/FormInput";
 import FormContainer from "@/components/form/FormContainer";
 import { createProfileAction } from "@/actions/actions";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-const CreatePage = () => {
+const CreateProfilePage = async () => {
+  const user = await currentUser();
+  if (user?.privateMetadata.hasProfile) redirect("/");
+
   return (
     <section className="flex flex-col items-center justify-center mt-10">
       <h1 className="font-bold text-2xl">กรอกข้อมูลการสมัคร</h1>
@@ -36,4 +41,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default CreateProfilePage;
