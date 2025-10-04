@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import WorkContainer from "@/components/main/WorkContainer";
 
 const page = () => {
   return (
-    <div>
-      <Button variant="secondary" size="lg">Button</Button>
-    </div>
+    <>
+      <WorkContainer />
+    </>
   );
 };
 

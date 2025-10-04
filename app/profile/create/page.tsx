@@ -14,7 +14,7 @@ const CreateProfilePage = async () => {
       <h1 className="font-bold text-2xl">กรอกข้อมูลการสมัคร</h1>
       <div className="border p-10 rounded-2xl my-5 w-full">
         <FormContainer action={createProfileAction}>
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid md:grid-cols-2 gap-5 mb-5">
             <FormInput
               name="firstName"
               label="ชื่อ"

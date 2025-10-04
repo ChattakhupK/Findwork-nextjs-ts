@@ -14,6 +14,9 @@ const TextAreaInput = ({ name, label, defaultValue }: TextAreaInputProps) => {
         {label}
       </Label>
       <Textarea id={name} name={name} defaultValue={defaultValue} required />
+      <p className="text-muted-foreground text-[12px] mt-2">
+        รายละเอียดข้อมูลไม่ควรเกิน 200 ตัวอักษร
+      </p>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useFormStatus } from "react-dom";
 import { LoaderCircle } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 
 type SubmitButtonsProps = {
   className?: string;
@@ -21,7 +22,7 @@ const SubmitButtons = ({ className, size, text }: SubmitButtonsProps) => {
     >
       {pending ? (
         <>
-          <LoaderCircle className="animate-spin" />
+          <Spinner />
           {text}
         </>
       ) : (
