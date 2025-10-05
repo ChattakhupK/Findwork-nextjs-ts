@@ -94,8 +94,21 @@ export const createWorkAction = async (
   redirect("/");
 };
 
-export const fetchWorkAction = async () => {
+export const fetchWorkAction = async ({
+  search = "",
+  category,
+}: {
+  search?: string;
+  category?: string;
+}) => {
   const work = await db.work.findMany({
+    where: {
+      category: category,
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+      ],
+    },
     orderBy: {
       createdAt: "desc",
     },

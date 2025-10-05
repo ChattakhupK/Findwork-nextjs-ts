@@ -12,14 +12,16 @@ import {
 const CategoryInput = ({
   defaultValue,
   name,
+  label,
 }: {
   defaultValue?: string;
   name: string;
+  label: string;
 }) => {
   return (
     <div className="my-2">
-      <Label className="mb-2" htmlFor="name">
-        {name}
+      <Label className="mb-2" htmlFor={name}>
+        {label}
       </Label>
       <Select
         defaultValue={defaultValue || categories[0].label}

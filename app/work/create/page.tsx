@@ -26,7 +26,7 @@ const CreateWorkPage = async () => {
               type="text"
               placeholder="กรุณาพิมพ์ชื่องาน..."
             />
-            <CategoryInput name="category" />
+            <CategoryInput label="หมวดหมู่" name="category" />
           </div>
           <TextAreaInput
             name="description"

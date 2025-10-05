@@ -1,5 +1,6 @@
 import { WorkCardProps } from "@/utils/types";
 import WorkCard from "../card/WorkCard";
+import LoadingCard from "../card/LoadingCard";
 
 const WorkList = ({ works }: { works: WorkCardProps[] }) => {
   return (
