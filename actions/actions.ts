@@ -191,3 +191,14 @@ export const fetchFavorits = async () => {
 
   return favorites.map((fav) => fav.work);
 };
+
+export const fetchWorkHero = async () => {
+  const works = await db.work.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 3,
+  });
+
+  return works;
+};
