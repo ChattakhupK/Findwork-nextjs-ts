@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Logo from "./Logo";
 import Menu from "./Menu";
 import Search from "./Search";
@@ -9,7 +10,9 @@ const Navbar = () => {
         {/* logo */}
         <Logo />
         {/* search */}
-        <Search />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Search />
+        </Suspense>
         {/* menu & darkmode */}
         <Menu />
       </div>

@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Provider from "@/components/Provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Prompt } from "next/font/google";
+import { Suspense } from "react";
 
 const prompt = Prompt({
   weight: "400",
