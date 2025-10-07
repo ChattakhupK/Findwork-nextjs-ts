@@ -23,16 +23,22 @@ type LatLng = [number, number];
 type LocationMarkerProps = {
   position: LatLng | null;
   setPosition: (position: LatLng) => void;
+  editable: boolean;
 };
-function LocationMarker({ position, setPosition }: LocationMarkerProps) {
+function LocationMarker({
+  position,
+  setPosition,
+  editable,
+}: LocationMarkerProps) {
   const map = useMapEvents({
     click(e) {
+      if (!editable) return;
       const newLocat: LatLng = [e.latlng.lat, e.latlng.lng];
       setPosition(newLocat);
       map.flyTo(e.latlng);
     },
   });
-
+  console.log("LocationMarker =>", position);
   return position === null ? null : (
     <Marker position={position} icon={markerIcon}>
       <Popup>จุดจ่ายเงินของคุณ</Popup>
@@ -42,19 +48,29 @@ function LocationMarker({ position, setPosition }: LocationMarkerProps) {
 
 type MapWorkProps = {
   location?: { lat: number; lng: number };
+  editable?: boolean;
 };
-const MapWork = ({ location }: MapWorkProps) => {
+const MapWork = ({ location, editable = false }: MapWorkProps) => {
   const defaultLocation: LatLng = [14, 101];
   const [position, setPosition] = useState<LatLng | null>(null);
+  console.log("mapwork =>", location);
+
+  const center: LatLng = location
+    ? [location.lat, location.lng]
+    : defaultLocation;
 
   return (
     <MapContainer
       className="h-100 z-0"
-      center={location || defaultLocation}
+      center={center}
       zoom={7}
       scrollWheelZoom={false}
     >
-      <LocationMarker position={position} setPosition={setPosition} />
+      <LocationMarker
+        position={position || center}
+        setPosition={setPosition}
+        editable={editable}
+      />
       <input type="hidden" name="lat" value={position ? position[0] : ""} />
       <input type="hidden" name="lng" value={position ? position[1] : ""} />
 

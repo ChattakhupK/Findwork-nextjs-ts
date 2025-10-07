@@ -202,3 +202,12 @@ export const fetchWorkHero = async () => {
 
   return works;
 };
+
+export const fetchWorkDetail = async ({ id }: { id: string }) => {
+  const work = await db.work.findFirst({
+    where: { id: id },
+    include: { profile: true },
+  });
+
+  return work;
+};

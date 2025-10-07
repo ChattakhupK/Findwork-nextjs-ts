@@ -44,7 +44,7 @@ const CreateWorkPage = async () => {
           </div>
           <div className="my-4">
             <ImageInput label="รูปภาพ" name="image" />
-            <MapWrapper />
+            <MapWrapper editable={true} />
           </div>
           <SubmitButtons size="default" text="สร้างงาน" />
         </FormContainer>
